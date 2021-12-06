@@ -14,7 +14,7 @@ variables:
   webAppName: 'python-cicd-23540'
 
   # Agent VM image name
-  name: 'SelfAgent1'
+  vmImageName: 'ubuntu-latest'
 
   # Environment name
   environmentName: 'python-cicd-23540'
@@ -30,18 +30,13 @@ stages:
   displayName: Build stage
   jobs:
   - job: BuildJob
-    strategy:
-      matrix:
-        Python38:
-          python.version: '3.8'
-          python.architecture: 'x64'
     pool:
-      name: 'SelfAgent1'
+      vmImage: $(vmImageName)
     steps:
     - task: UsePythonVersion@0
       inputs:
-        versionSpec: '$(python.version)'
-      displayName: 'Use Python $(python.version)'
+        versionSpec: '$(pythonVersion)'
+      displayName: 'Use Python $(pythonVersion)'
 
     - script: |
         python -m venv antenv
@@ -72,7 +67,7 @@ stages:
   jobs:
   - deployment: DeploymentJob
     pool:
-      name: 'SelfAgent1'
+      vmImage: $(vmImageName)
     environment: $(environmentName)
     strategy:
       runOnce:
