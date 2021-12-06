@@ -30,13 +30,18 @@ stages:
   displayName: Build stage
   jobs:
   - job: BuildJob
+    strategy:
+      matrix:
+        Python38:
+          python.version: '3.8'
+          python.architecture: 'x64'
     pool:
       name: 'SelfAgent1'
     steps:
     - task: UsePythonVersion@0
       inputs:
-        versionSpec: '$(pythonVersion)'
-      displayName: 'Use Python $(pythonVersion)'
+        versionSpec: '$(python.version)'
+      displayName: 'Use Python $(python.version)'
 
     - script: |
         python -m venv antenv
