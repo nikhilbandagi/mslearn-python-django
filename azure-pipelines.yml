@@ -29,6 +29,15 @@ stages:
 - stage: Build
   displayName: Build stage
   jobs:
+    build:
+      runs-on: SelfAgent1
+    
+      steps:
+        - uses: actions/checkout@v2
+        - name: Set up Python version
+          uses: actions/setup-python@v1
+          with:
+            python-version: '3.8'
   - job: BuildJob
     pool:
       name: $(name)
@@ -47,7 +56,6 @@ stages:
         pip freeze > requirements.txt
       workingDirectory: $(projectRoot)
       displayName: "Install requirements"
-
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
