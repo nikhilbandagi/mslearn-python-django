@@ -33,9 +33,12 @@ stages:
     pool:
       name: $(name)
     steps:
+    
     - task: UsePythonVersion@0
       inputs:
-        versionSpec: '$(pythonVersion)'
+        versionSpec: '3.8'
+        addToPath: true
+        architecture: 'x64'
       displayName: 'Use Python $(pythonVersion)'
 
     - script: |
@@ -76,12 +79,16 @@ stages:
 
           - task: UsePythonVersion@0
             inputs:
-              versionSpec: '$(pythonVersion)'
+              versionSpec: '3.8'
+              addToPath: true
+              architecture: 'x64'
             displayName: 'Use Python version'
 
+          
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : python-cicd-23540'
             inputs:
-              azureSubscription: $(azureServiceConnectionId)
-              appName: $(webAppName)
-              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+              azureSubscription: '$(azureServiceConnectionId)'
+              appType: 'webAppLinux'
+              appName: '$(webAppName)'
+              package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
