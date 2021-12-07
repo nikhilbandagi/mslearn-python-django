@@ -50,11 +50,11 @@ stages:
       displayName: 'Upload package'
       artifact: drop
     - script: |
-        pip install setup
-        pip install -r $(projectRoot)/requirements.txt
-        pip install pytest
+        pip3 install setup
+        pip3 install -r $(projectRoot)/requirements.txt
+        pip3 install pytest
         pytest Tests/unit_tests --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-unit.xml
-        pip install pycmd
+        pip3 install pycmd
         py.cleanup Tests/
       displayName: 'Run unit tests'
 
