@@ -33,10 +33,6 @@ stages:
     pool:
       name: 'SelfAgent1'
     steps:
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '$(pythonVersion)'
-      displayName: 'Use Python $(pythonVersion)'
 
     - script: |
         python3 -m venv antenv
@@ -87,10 +83,7 @@ stages:
         deploy:
           steps:
 
-          - task: UsePythonVersion@0
-            inputs:
-              versionSpec: '$(pythonVersion)'
-            displayName: 'Use Python version'
+
 
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : python-cicd-23737'
