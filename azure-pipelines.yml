@@ -84,7 +84,7 @@ stages:
               azureSubscription: $(azureServiceConnectionId)
               appName: $(webAppName)
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-            displayName: 'Deploy Azure Web App : python-cicd-16353'
+            displayName: 'Deploy Azure Web App : python-cicd-23540'
           - script: |
               pip3 install selenium
               pip3 install pytest
