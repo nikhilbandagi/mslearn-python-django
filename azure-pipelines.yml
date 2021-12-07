@@ -53,7 +53,7 @@ stages:
         pip3 install setup
         pip3 install -r $(projectRoot)/requirements.txt
         pip3 install pytest
-        pytest Tests/unit_tests --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-unit.xml
+        python3 -m pytest Tests/unit_tests --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-unit.xml
         pip3 install pycmd
       displayName: 'Run unit tests'
 
