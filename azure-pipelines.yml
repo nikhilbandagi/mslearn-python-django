@@ -55,7 +55,7 @@ stages:
         pip3 install pytest
         pytest Tests/unit_tests --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-unit.xml
         pip3 install pycmd
-        py.cleanup Tests/
+        #py.cleanup Tests/
       displayName: 'Run unit tests'
 
     - task: PublishTestResults@2
