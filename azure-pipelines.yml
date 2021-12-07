@@ -81,9 +81,12 @@ stages:
           - script: 
               pip3 install selenium
               pip3 install pytest
-               pytest tests/functional_tests/ --webAppUrl=https://$(webAppName).azurewebsites.net --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-functional.xml
+              pytest tests/functional_tests/ 
+              --webAppUrl=https://$(webAppName).azurewebsites.net 
+              --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-functional.xml
             workingDirectory: $(Pipeline.Workspace)
             displayName: Run functional tests
+
           - task: PublishTestResults@2
             inputs:
               searchFolder: $(Pipeline.Workspace)
