@@ -1,15 +1,11 @@
-# Python to Linux Web App on Azure
-# Build your Python project and deploy it to Azure as a Linux Web App.
-# Change python version to one thats appropriate for your application.
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
-
 trigger:
-- master
+- main
 
 variables:
+
   # Azure Resource Manager connection created during pipeline creation
   azureServiceConnectionId: 'ba0a9e79-9926-4d93-a646-2298e8f469b8'
-
+  
   # Web app name
   webAppName: 'python-cicd-23737'
 
@@ -20,8 +16,8 @@ variables:
   environmentName: 'python-cicd-23737'
 
   # Project root folder. Point to the folder containing manage.py file.
-  projectRoot: $(System.DefaultWorkingDirectory)
-
+  projectRoot: $(System.DefaultWorkingDirectory)/Application
+  
   # Python version: 3.7
   pythonVersion: '3.8'
 
@@ -31,18 +27,16 @@ stages:
   jobs:
   - job: BuildJob
     pool:
-      name: 'SelfAgent1'
+      name: $(name)
     steps:
-
     - script: |
         python3 -m venv antenv
         source antenv/bin/activate
         python3 -m pip install --upgrade pip
-        pip3 install setup
-        pip3 install -r requirements.txt
+        pip install setup
+        pip install -r requirements.txt
       workingDirectory: $(projectRoot)
       displayName: "Install requirements"
-
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
@@ -62,11 +56,13 @@ stages:
         python3 -m pytest Tests/unit_tests --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-unit.xml
         pip3 install pycmd
       displayName: 'Run unit tests'
+
     - task: PublishTestResults@2
       inputs:        
         searchFolder: $(System.DefaultWorkingDirectory)
         testResultsFiles: '**/test-*.xml'
       displayName: 'Publish test results'
+
     - publish: $(System.DefaultWorkingDirectory)/Tests
       artifact: tests
 - stage: Deploy
@@ -83,11 +79,9 @@ stages:
         deploy:
           steps:
 
-
-
           - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App : python-cicd-23737'
             inputs:
               azureSubscription: $(azureServiceConnectionId)
               appName: $(webAppName)
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+            displayName: 'Deploy Azure Web App : python-cicd-23540'
