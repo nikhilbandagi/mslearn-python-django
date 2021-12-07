@@ -85,9 +85,4 @@ stages:
               appName: $(webAppName)
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
             displayName: 'Deploy Azure Web App : python-cicd-23540'
-          - script: |
-              pip3 install selenium
-              pip3 install pytest
-              python3 -m pytest tests/functional_tests/ --webAppUrl=https://$(webAppName).azurewebsites.net --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-functional.xml
-            workingDirectory: $(Pipeline.Workspace)
-            displayName: 'Run functional tests'
+
