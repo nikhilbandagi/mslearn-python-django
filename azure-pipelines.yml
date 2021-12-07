@@ -79,7 +79,8 @@ stages:
               appName: '$(webAppName)'
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
 
-  - script: |trigger:
+  - script: |
+  trigger:
   - master
 variables:
   azureServiceConnectionId: 27f6bc8a-1e91-42cd-aca3-83942f03f462
